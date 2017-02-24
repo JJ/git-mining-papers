@@ -1,0 +1,41 @@
+---
+title: "Self organized criticality in software repositories: The case of Moose revisited"
+author: "JJ Merelo"
+date: "24 de febrero de 2017"
+output: html_document
+bibliography: biblio.bib
+subtitle: The case of vue.js
+abstract: |
+  The existence of a critical state in software repositories arrived through self-organization is sufficiently proved in a series of paper that look at the evolution of their state from different points of view. In this paper we will focus on the series of files changed in every commit, which reflect the change in state of the file co-modification network (FCMN). We will look at the telltale signs of self-organized criticality in this time series: power laws, long-distance correlations and pink noise. We are revisiting the perl software library Moose to check for similarities between the results obtained and also looking for the faster and more flexible way of establishing the complex nature of software development teams. 
+---
+
+```{r setup, include=FALSE}
+library(ggplot2)
+library("ggfortify")
+library(dplyr)
+library(TTR)
+
+files <-  read.csv("../git-mining/data/Moose-files-per-commit.csv")
+
+files$SMA10 <- SMA(files$Number.of.files,n=10)
+files$SMA20 <- SMA(files$Number.of.files,n=20)
+
+files$x = as.numeric(row.names(files))
+```
+
+#Introduction
+
+The file co-modification network (FCMN) is a new way of mining software repositories @woosung2012survey which focuses on information found in the commits made in a software repository. Every commit contains metadata that include the author and committer of the repository as well as the files that have been changed. We create the FCMN creating a graph whose nodes are files in the repository and linking them if they appear in the same commit, that is, if they have been co-modified, hence the name File Co-Modification Network. 
+
+We are looking at different, and possibly more efficient, ways of examining the complex nature of software repositories, which reflect the fact that they are a complex socio-technical system @myers2003software. By looking at a particular graph, the FCMN, and its evolution, we might be able to find a single register that is able to reflect different phenomena related to complex systems, such as phase transitions @vue2017 in a way that gives us more insight on the actual complex dynamics in the software development team that allows us to leverage this knowledge and evaluate or improve its performance and software quality. FCMN deals with real interactions between software artifacts: since they have been modified in the same session and by the same authors, they have a meaningful functional relationship, and this relationship is also local in time. 
+
+We think that the FCMN, which so far and as far as we know has not been used in the MSR area, is a way of examining and representing software repositories better than current file co-authorship or author co-modification graphs @lopez2004applying. For instance, in order to check the time series of changes in a repository @lopez2004applying we had to go to information outside this network, looking at the number of lines changed per file in each commit. In this paper, however, we will look at the evolution of the FCMN itself by registering the number of files co-modified in every commit. 
+
+Next we examine the methodology we have followed, before commenting the results. 
+
+
+# Methodology
+
+
+
+# References
