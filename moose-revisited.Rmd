@@ -1,5 +1,5 @@
 ---
-title: "Self organized criticality in software repositories: The case of Moose revisited"
+title: "Self organized criticality in software repositories: The case of Moose revisited using the file co-modification network"
 author: "JJ Merelo"
 date: "24 de febrero de 2017"
 output: 
@@ -8,7 +8,7 @@ output:
 bibliography: biblio.bib
 subtitle: The case of vue.js
 abstract: |
-  The existence of a critical state in software repositories arrived through self-organization is sufficiently proved in a series of paper that look at the evolution of their state from different points of view. In this paper we will focus on the series of files changed in every commit, which reflect the change in state of the file co-modification network (FCMN). We will look at the telltale signs of self-organized criticality in this time series: power laws, long-distance correlations and pink noise. We are revisiting the perl software library Moose to check for similarities between the results obtained and also looking for the faster and more flexible way of establishing the complex nature of software development teams. 
+  The existence of a critical state in software repositories arrived through self-organization is sufficiently proved in a series of paper that look at the evolution of their state from different points of view. In this paper we will focus on the series of files changed in every commit, which reflect the change in state of the file co-modification network (FCMN). We will look at the telltale signs of self-organized criticality in this time series: power laws, long-distance correlations and pink noise. We are revisiting the Perl software library Moose to check for similarities between the results obtained and also looking for the faster and more flexible way of establishing the complex nature of software development teams. 
 ---
 
 ```{r setup, include=FALSE}
@@ -60,7 +60,7 @@ sizes.fit <- lm(log(1+lines.count$Number.of.files) ~ log(lines.count$count))
 ggplot(lines.count, aes(x=Number.of.files, y=count))+geom_point()+scale_x_log10()+scale_y_log10()+stat_smooth()
 ```
 
-In this graph the x axis, which is in a logarithmic scale, represents the number of files changed, and the y axis counts the number of times that particular number shows up in the time series. It should be noded that in some cases the number of files affected is 0 if there have been deletions, and that accounts for the point at x=0. The chart shows the usual power law with a long tail, with changes including many different files decreasingly frequent, but possible. The slope of the fit is -0.4817, which is different from what was computed in the previous paper on Moose, but still a power law which proves again the self-organized nature of the repository. This can also be seen if we rank the commits by decreasing number of files changed.
+In this graph the x axis, which is in a logarithmic scale, represents the number of files changed, and the y axis counts the number of times that particular number shows up in the time series. It should be noted that in some cases the number of files affected is 0 if there have been deletions, and that accounts for the point at x=0. The chart shows the usual power law with a long tail, with changes including many different files decreasingly frequent, but possible. The slope of the fit is -0.4817, which is different from what was computed in the previous paper on Moose, but still a power law which proves again the self-organized nature of the repository. This can also be seen if we rank the commits by decreasing number of files changed.
 
 
 ```{r zipf, echo=FALSE, warnings=FALSE}
