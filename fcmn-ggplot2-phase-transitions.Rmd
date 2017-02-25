@@ -15,7 +15,7 @@ abstract: This document provides an overview of phase transitions in sofware rep
 
 ```{r setup, include=FALSE}
 library(ggplot2)
-load(file="../git-mining/data/data-edges-ggplot2-data.Rda")
+load(file="../git-mining/data/edges-ggplot2-data.Rda")
 ```
 
 # Introduction
@@ -42,39 +42,33 @@ We are looking for phase transitions in these systems. At one or possible severa
 ggplot(data=measures,aes(x=commit,y=degree))+ geom_line()
 ```
 
-This graph already shows a *jump* in the average degree around commit number 2500, due to the inclusion of a commit with a high number of different files which, effectively, grows the network to a point that average degree goes from less than 50 to 60. There are also smaller jumps, and the fact that the degree grows steadily reflects the growing relationship between different files in the repository. Let us see if this is an uniform grow or not in the next graph, which represents the average betweenness.
-
 ```{r betweenness, echo=FALSE}
 ggplot(data=measures,aes(x=commit,y=betweenness))+ geom_line()
 ```
 
-This graph more clearly reflects the phase transition in the same commit, with a jump in the average betweenness, which keeps increasing sharply when new commits create new edges in the graph. This is usually due to the union of different parts of the network which create a giant connected component or GCC. This should be reflected in the next graph, which plots the number of nodes in this biggest connected component. 
+```{r closeness, echo=FALSE}
+ggplot(data=measures,aes(x=commit,y=closeness))+ geom_line()
+```
 
 ```{r connected.rate, echo=FALSE}
 ggplot(data=measures,aes(x=commit,y=connected.rate))+ geom_line()
 ```
 
-Effectively, there is a small jump in connectedness to a bit more than the 50% of the vertices in the network. There is also a small jump in that rate in the ~2500 mark which accounts for the previous jumps in average degreee and betweenness. However, the real phase transition appears later, when most files are included in the giant connected component. 
+```{r diameter, echo=FALSE}
+ggplot(data=measures,aes(x=commit,y=diameter))+ geom_line()
+```
 
-This connection between separated parts of the project might also make the graph a small-world type of graph. This is measured by the transitivity or clustering coefficient, which is shown next. 
+```{r distance, echo=FALSE}
+ggplot(data=measures,aes(x=commit,y=distance))+ geom_line()
+```
 
 ```{r clustering, echo=FALSE}
 ggplot(data=measures,aes(x=commit,y=transitivity))+ geom_line()
 ```
 
-The normal regime in this graph is the decrease of the clustering coefficient, which reflects the amount of *full triangles* in the graph. As new vertices are added, they are attached to a single file or a few, thus decreasing the overall coefficient. However, there are several sharp jumps at many different points. The most important one is the one we have seen before at ~2500 commits, taking the clustering coefficient to a total of around 0.7 and proving the hypothesis that we have advanced: a single commit including many different files, probably due to a merging from a development branch or to a big refactoring.
-
-However, that important phase transition is not actually what places the system in a critical state. The one that happens around 400 commits is very likely the first one to do so. Other transitions happen already in the shape of *avalanches* once the system is already in a critical state. 
-
-The fact that the 4 measures allow us to appreciate phase transitions in the graph representing a software project, Vue.js in this case, proves that using this type of file co-occurrence graph is a valid tool for mining software repositories.
 
 # Conclusions
 
-In this paper we have first tried to set up a series of tools for mining software repositories that use commits as an atomic unit, and then try to establish the usefulness of the file co-occurrence graph in commits (FCOGC) as a tool for analyzing the state and the evolution of the complex social graph created by a software project. This FCOGC uses files as vertices and creates an edge if the files appear in the same commit. The fact that they do so reveal and actual link between files, since they have been worked on at the same time in a work session, which might be as short as a few lines of code or as long as a whole refactorization.
-
-This also means that commits that include many files will, in fact, be critical for reflecting and also causing changes on the socio-technical system, and that is clearly seen in the study above. These commits, however, will cause changes in the graph further down the project, as reflected by the betweenness and degree graphs. The change in the complex network is not related to the size of the jump in degree, as is the case in systems in a critical state. A relatively small change in edges or vertices will cause a big change in the network itself. The connectedness at the 400 and 2500 mark, in fact, changes very little; however, all other network macro measures experiment a jump.
-
-We can conclude, then, than in order to find out the onset of a critical state, using the evolution of the FCOGC network can result in a more precise tool than the *flattened* versions of the file-author graph. 
 
 
 # References
