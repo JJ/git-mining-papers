@@ -6,19 +6,16 @@ output:
   pdf_document: default
   html_document: default
 bibliography: biblio.bib
-subtitle: The case of vue.js
-abstract: This document provides an overview of phase transitions in software repositories
-  examining vue.js, an open source JavaScript framework in active development. By
-  examining commit co-occurrence graphs, it shows how phase transitions take the repository
-  to a critical state via self-organization.The main objective of this paper is to
-  prove that commit co-occurrence graphs and its evolution are an adequate way to detect
-  these phase transitions which lead to the self-organized critical state that have
-  been observed in may repositories.
+subtitle: Examining ggplot2
+abstract: This document provides an overview of phase transitions in sofware repositories
+  examining ggplot2, an open source R graphics and visualization library in active development. By
+  examining how the file co-modification graph evolves, it shows how phase transitions take the repository
+  to a critical state through the self-organization of the software developers, since there is no central authority that organizes it. 
 ---
 
 ```{r setup, include=FALSE}
 library(ggplot2)
-load(file="../git-mining/data/vue.Rda")
+load(file="../git-mining/data/data-edges-ggplot2-data.Rda")
 ```
 
 # Introduction
@@ -29,7 +26,7 @@ The main instruments for taking these measures have been co-authorship graphs fo
 
 File graphs do have the same problem. A repository is a bipartite graph of files and authors, and *flattening* it to any of them reflects the same problem. Some authors have worked in many files, which means that there are files densely connected forming cliques that have little, or nothing, to do with the complex nature of the system.
 
-We are interested in looking for a graph representation whose measures and evolution actually reflect the fact that through a self-organized phase transition they have reached a critical state @doi101093comnetcnt022. That is why we will be looking at a type of graph, the graph of co-occurrence in commits, which we have examined before in @vue2017, looking for increments in measures that reflect this phase transitions to a critical state. 
+We are interested in looking for a graph representation whose measures and evolution actually reflect the fact that through a self-organized phase transition they have reached a critical state @doi101093comnetcnt022. That is why we will be looking at a type of graph, the graph of co-ocurrence in commits, which we have examined before in @vue2017, looking for increments in measures that reflect this phase transitions to a critical state. 
 
 ## Methodology
 
@@ -57,7 +54,7 @@ This graph more clearly reflects the phase transition in the same commit, with a
 ggplot(data=measures,aes(x=commit,y=connected.rate))+ geom_line()
 ```
 
-Effectively, there is a small jump in connectedness to a bit more than the 50% of the vertices in the network. There is also a small jump in that rate in the ~2500 mark which accounts for the previous jumps in average degree and betweenness. However, the real phase transition appears later, when most files are included in the giant connected component. 
+Effectively, there is a small jump in connectedness to a bit more than the 50% of the vertices in the network. There is also a small jump in that rate in the ~2500 mark which accounts for the previous jumps in average degreee and betweenness. However, the real phase transition appears later, when most files are included in the giant connected component. 
 
 This connection between separated parts of the project might also make the graph a small-world type of graph. This is measured by the transitivity or clustering coefficient, which is shown next. 
 
