@@ -5,7 +5,7 @@ date: "20 de febrero de 2017"
 output:
   pdf_document: default
   html_document: default
-bibliography: biblio.bib
+bibliography: soc.bib
 subtitle: The case of vue.js
 abstract: This document provides an overview of phase transitions in software repositories
   examining vue.js, an open source JavaScript framework in active development. By
