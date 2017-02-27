@@ -5,7 +5,7 @@ date: "20 de febrero de 2017"
 output:
   pdf_document: default
   html_document: default
-bibliography: biblio.bib
+bibliography: soc.bib
 subtitle: Examining ggplot2
 abstract: This document provides an overview of phase transitions in sofware repositories
   examining ggplot2, an open source R graphics and visualization library in active development. By
