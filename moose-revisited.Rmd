@@ -1,12 +1,12 @@
 ---
 title: "Self organized criticality in software repositories: The case of Moose revisited using the file co-modification network"
 author: "JJ Merelo"
-date: "24 de febrero de 2017"
+date: "August 7, 2017"
 output: 
-  pdf_document: default
+  pdf_document:
+    keep_tex: true
   html_document: default
-bibliography: biblio.bib
-subtitle: The case of vue.js
+bibliography: soc.bib
 abstract: |
   The existence of a critical state in software repositories arrived through self-organization is sufficiently proved in a series of paper that look at the evolution of their state from different points of view. In this paper we will focus on the series of files changed in every commit, which reflect the change in state of the file co-modification network (FCMN). We will look at the telltale signs of self-organized criticality in this time series: power laws, long-distance correlations and pink noise. We are revisiting the Perl software library Moose to check for similarities between the results obtained and also looking for the faster and more flexible way of establishing the complex nature of software development teams. 
 ---
@@ -27,29 +27,29 @@ files$x = as.numeric(row.names(files))
 
 #Introduction
 
-The file co-modification network (FCMN) is a new way of mining software repositories (MSR) @woosung2012survey which focuses on information found in the commits made in a software repository. Every commit contains metadata that include the author and committer of the repository as well as the files that have been changed. We create the FCMN creating a graph whose nodes are files in the repository and linking them if they appear in the same commit, that is, if they have been co-modified, hence the name File Co-Modification Network. 
+The file co-modification network (FCMN) is a new way of mining software repositories (MSR) [@woosung2012survey] which focuses on information found in the commits, that is, registered changes, made in them. Every commit contains metadata about the author and committer of the repository as well as the files that have been changed. We create the FCMN by defining a graph whose nodes are files in the repository and whose edges link files if they appear in the same commit, that is, if they have been co-modified, hence the name File Co-Modification Network. 
 
-We are looking at different, and possibly more efficient, ways of examining the complex nature of software repositories, which reflect the fact that they are a complex socio-technical system @myers2003software. By looking at a particular graph, the FCMN, and its evolution, we might be able to find a single register that is able to reflect different phenomena related to complex systems, such as phase transitions @vue2017 in a way that gives us more insight on the actual complex dynamics in the software development team that allows us to leverage this knowledge and evaluate or improve its performance and software quality. FCMN deals with real interactions between software artifacts: since they have been modified in the same session and by the same authors, they have a meaningful functional relationship, and this relationship is also local in time. 
+We are looking at different, and possibly more efficient than traditional ways based on size changes, ways of examining the complex nature of software repositories, which reflect the fact that they are a complex socio-technical system [@myers2003software]. By looking at a particular graph, the FCMN, and its evolution, we might be able to find a single register that is able to reflect different phenomena related to complex systems, such as phase transitions [@vue2017] in a way that gives us more insight on the actual complex dynamics in the software development team that allows us to leverage this knowledge and evaluate or improve its performance and software quality. FCMN deals with real interactions between software artifacts: since they have been modified in the same session and by the same authors, they have a meaningful functional relationship, and this relationship is also local in time. 
 
-We think that the FCMN, which so far and as far as we know has not been used in the MSR area, is a way of examining and representing software repositories better than current file co-authorship or author co-modification graphs @lopez2004applying. For instance, in order to check the time series of changes in a repository @Merelo2016repomining we had to go to information outside this network, looking at the number of lines changed per file in each commit. In this paper, however, we will look at the evolution of the FCMN itself by registering the number of files co-modified in every commit. 
+We think that the FCMN, which so far and as far as we know has not been used in the MSR area, is a way of examining and representing software repositories better than current file co-authorship or author co-modification graphs [@lopez2004applying]. For instance, in order to check the time series of changes in a repository [@Merelo2016repomining] we had to go to information outside this network, looking at the number of lines changed per file in each commit. In this paper, however, we will look at the evolution of the FCMN itself by registering the number of files co-modified in every commit. 
 
 Next we examine the methodology we have followed, before commenting the results. 
 
 
 # Methodology
 
-We have developed a [Perl module](http://search.cpan.org/~jmerelo/Git-Repo-Commits-0.0.5/) that extracts file and author information from a git repository in a single command, simplifying the scripts used previously in @vue2017. This allows for a short and compact Perl script that extracts information from the repository, which is then processed using R, a part of it embedded in this paper itself. Data and scripts are available with free software license from [GitHub](http://github.com/JJ/git-mining).
+We have developed a [Perl module](http://search.cpan.org/~jmerelo/Git-Repo-Commits-0.0.5/) that extracts file and author information from a git repository in a single command, simplifying the scripts used previously in [@vue2017]. This allows for a short and compact Perl script that extracts information from the repository, which is then processed using R, a part of it embedded in this paper itself. Data and scripts are available with free software license from [GitHub](http://github.com/JJ/git-mining).
 
 Next we will present the result obtained exploring the time series of files changed in commits in the Moose repository; data has been updated to the latest version of the repository in February 2017.
 
 # Results
 
-We will first look at the time series itself, in the same way we did in @Merelo2016repomining. 
+We will first look at the time series itself, in the same way we did in [@Merelo2016repomining]. 
 ```{r tseries, echo=FALSE, warnings=FALSE}
 ggplot(files) +geom_line(aes(x=x,y=SMA10,color='SMA10'))+geom_line(aes(x=x,y=SMA20,color='SMA20'))+scale_y_log10()
 ```
 
-This series represent the number of files changed per commit in a logarithmic y scale and smoothed over 10 and 20 changes. Similarly to @Merelo2016repomining, there are wide changes in scale, with some commits reaching more than one hundred different files. The *rhythm* in changes observed previously is also present. 
+This series represent the number of files changed per commit in a logarithmic y scale and smoothed over 10 and 20 changes. Similarly to [@Merelo2016repomining], there are wide changes in scale, with some commits reaching more than one hundred different files. The *rhythm* in changes observed previously is also present. 
 
 But the more interesting signs of this complex nature are power laws, which are represented next. 
 
@@ -70,7 +70,7 @@ sorted.lines.no0 <- sorted.lines[sorted.lines$Number.of.files>0,]
 zipf.fit <- lm(log(sorted.lines.no0$Number.of.files) ~ sorted.lines.no0$x)
 ```
 
-This chart shows again that there is a systematic difference between the size of every commit and the next in line, which appears as a power law with slope equal to   -0.0003223. The *broken stick* shape of the curve is very similar to the one in @Merelo2016repomining, with sizes decreasing faster for bigger changes. 
+This chart shows again that there is a systematic difference between the size of every commit and the next in line, which appears as a power law with slope equal to   -0.0003223. The *broken stick* shape of the curve is very similar to the one in [@Merelo2016repomining], with sizes decreasing faster for bigger changes. 
 
 Once the existence of these power laws has been again established, self-organized criticality shows up in the time series as long-distance correlations; with changes of any size provoking *avalanches* at a later point in time. 
 
@@ -78,7 +78,7 @@ Once the existence of these power laws has been again established, self-organize
 autoplot(pacf(files$Number.of.files, plot=FALSE) )
 ```
 
-While previously in @Merelo2016repomining there were sharp autocorrelation in a few points, in this case autocorrelation occurs at many different scales, another way of showing the multi-scale nature of complex socio-technical systems, which finally can be also observed in the spectral power density plot next.
+While previously in [@Merelo2016repomining] there were sharp autocorrelation features in a few points, in this case autocorrelation occurs at many different scales, another way of showing the multi-scale nature of complex socio-technical systems such as this one, which finally can be also observed in the spectral power density plot next.
 
 
 ```{r pink, echo=FALSE, warnings=FALSE}
@@ -91,7 +91,7 @@ This plot has a logarithmic x scale which highlights the slope of the curve, wit
 
 # Conclusions
 
-In this paper our main intention was to show how working simply with the files changed in commits in a repository we can discover and measure the complex socio-technical nature of software development teams. In previous reports @vue2017 we had looked at the graph for a new repository; however, in this paper our intention was to reproduce the results published in a previous paper @Merelo2016repomining which proved that the Moose repository (and software development team) were in a self-organized critical state. In fact, this has been again proved, but at the same time we have developed the software that will allow us to make the examination of software repositories faster and straightforward and showed the utility of the FCMN, or file co-modification graph, as an useful tool for working in the MSR field. 
+In this paper our main intention was to show how working simply with the files changed in commits in a repository we can discover and measure the complex socio-technical nature of software development teams. In previous reports [@vue2017] we had looked at the graph for a new repository; however, in this paper our intention was to reproduce the results published in a previous paper [@Merelo2016repomining] which proved that the Moose repository (and software development team) were in a self-organized critical state. In fact, this has been again proved, but at the same time we have developed the software that will allow us to make the examination of software repositories faster and straightforward and showed the utility of the FCMN, or file co-modification graph, as an useful tool for working in the MSR field. 
 
 
 # References
