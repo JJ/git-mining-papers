@@ -20,13 +20,13 @@ load(file="../git-mining/data/edges-ggplot2-data.Rda")
 
 # Introduction
 
-The fact that software projects as registered in software repositories constitute complex systems has been known for a long time @lopez2008applying, @lopez2004applying  @Merelo2016repomining. Since the beginning of the century several authors have examined software repositories and looked at size of changes, file coauthorship graph, and other types of graphs, concluding that they are a scale free system as reflected by many different measures such as the degree of coauthorship in author graphs or the size of changes.
+The fact that software projects as registered in software repositories constitute complex systems has been known for a long time [@lopez2008applying, @lopez2004applying, @Merelo2016repomining]. Since the beginning of the century several authors have examined software repositories and looked at size of changes, file coauthorship graph, and other types of graphs, concluding that they are a scale free system as reflected by many different measures such as the degree of coauthorship in author graphs or the size of changes.
 
 The main instruments for taking these measures have been co-authorship graphs for modules or even files. However, The main problem with this is that they tend to create densely connected graphs since there are files such as the documentation or build tools or modules such as the test folder where most authors have contributed. To make these file coauthorship graphs *interesting*, some filters have to be applied eliminating those files, for instance, or considering only certain type of files. 
 
 File graphs do have the same problem. A repository is a bipartite graph of files and authors, and *flattening* it to any of them reflects the same problem. Some authors have worked in many files, which means that there are files densely connected forming cliques that have little, or nothing, to do with the complex nature of the system.
 
-We are interested in looking for a graph representation whose measures and evolution actually reflect the fact that through a self-organized phase transition they have reached a critical state @doi101093comnetcnt022. That is why we will be looking at a type of graph, the graph of co-ocurrence in commits, which we have examined before in @vue2017, looking for increments in measures that reflect this phase transitions to a critical state. 
+We are interested in looking for a graph representation whose measures and evolution actually reflect the fact that through a self-organized phase transition they have reached a critical state [@doi101093comnetcnt022]. That is why we will be looking at a type of graph, the graph of co-ocurrence in commits, which we have examined before in [@vue2017], looking for increments in measures that reflect this phase transitions to a critical state. 
 
 ## Methodology
 
